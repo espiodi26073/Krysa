@@ -1,4 +1,4 @@
-<h1>Krysa.store</h1>
+<h1>💲 Krysa.store</h1>
 
 <h2 style="font-size: 20px;">📋 Descripción</h2>
 Este proyecto es una página web interactiva que permite a los usuarios crear y personalizar modelos 3D similares al asistente virtual, con la opción de comprarlos en formato STL para imprimir. Además, la página cuenta con una tienda donde se pueden adquirir modelos 3D de personajes famosos en versión monono y ofrece la posibilidad de realizar encargos personalizados.
