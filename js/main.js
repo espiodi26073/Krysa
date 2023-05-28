@@ -46,12 +46,12 @@ rgbeLoader.load('/assets/unity.hdr', function(texture) {
 // Importacion de modelos
 const gltfLoader = new GLTFLoader();
 
-cargarModelo('/assets/models/monono/base.gltf', true, base);
-cargarModelo('/assets/models/monono/cabeza.gltf', true, cabeza);
-cargarModelo('/assets/models/monono/cuerpo.gltf', true, cuerpo);
-cargarModelo('/assets/models/monono/gorra.gltf', false, gorra);
-cargarModelo('/assets/models/monono/pelo.gltf', true, pelo);
-cargarModelo('/assets/models/monono/zapas.gltf', true, zapas);
+cargarModelo('/assets/models/monono/base.gltf', true, "base");
+cargarModelo('/assets/models/monono/cabeza.gltf', true, "cabeza");
+cargarModelo('/assets/models/monono/cuerpo.gltf', true, "cuerpo");
+cargarModelo('/assets/models/monono/gorra.gltf', false, "gorra");
+cargarModelo('/assets/models/monono/pelo.gltf', true, "pelo");
+cargarModelo('/assets/models/monono/zapas.gltf', true, "zapas");
 
 function cargarModelo(url, add, name) {
   //Load the file
