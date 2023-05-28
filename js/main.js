@@ -29,7 +29,7 @@ document.body.appendChild(renderer.domElement);
 // Controles
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enablePan = false;
-controls.enableZoom = false;
+//controls.enableZoom = false;
 controls.enableChangeTarget = false;
 controls.enableTilt = false;
 controls.minPolarAngle = Math.PI / 5;
