@@ -9,7 +9,7 @@ import {STLExporter} from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/ex
 const scene = new THREE.Scene();
 
 // Background
-const textureBG = new THREE.TextureLoader().load('/assets/Img/fomdofibal.png');
+const textureBG = new THREE.TextureLoader().load('/assets/Img/three/fondo.png');
 scene.background = textureBG; 
 
 // create a new camera with positions and angles
@@ -43,28 +43,16 @@ rgbeLoader.load('/assets/unity.hdr', function(texture) {
     scene.environment = texture;
 }); 
 
+
 // Importacion de modelos
 const gltfLoader = new GLTFLoader();
-
-cargarModelo('/assets/models/monono/base.gltf', true, "base");
-cargarModelo('/assets/models/monono/cabeza.gltf', true, "cabeza");
-cargarModelo('/assets/models/monono/cuerpo.gltf', true, "cuerpo");
-cargarModelo('/assets/models/monono/gorra.gltf', false, "gorra");
-cargarModelo('/assets/models/monono/pelo.gltf', true, "pelo");
-cargarModelo('/assets/models/monono/zapas.gltf', true, "zapas");
-
-function cargarModelo(url, add, name) {
+function cargarModelo(url) {
   //Load the file
   gltfLoader.load(url,
     function (gltf) {
       //If the file is loaded, add it to the scene
-      var model = gltf.scene;
-      model.name = name;
-      if (add) {
-        scene.add(model);
-      }
-      console.log(model);
-      callback = model; // Llama a la devolución de llamada con el modelo cargado
+      let model = gltf.scene;
+      scene.add(model);
     },
     function (xhr) {
       //While it is loading, log the progress
@@ -77,55 +65,8 @@ function cargarModelo(url, add, name) {
   );
 }
 
-
-//Exportador stl
-const exporter = new STLExporter();
-var exportButton = document.getElementById('download.stl');
-exportButton.addEventListener('click', function() {
-    scene.remove(base);
-    var stlData = exporter.parse(scene);
-    var link = document.createElement('a');
-    link.href = 'data:application/octet-stream,' + encodeURIComponent(stlData);
-    link.download = 'mi_monono.stl';
-    link.click();
-    scene.add(base);
-});
-
-var cambiarAccesorio = document.getElementById('cambiarAccesorio');
-let aux = true;
-cambiarAccesorio.addEventListener('click', function() {
-    if (aux) {
-        scene.remove(pelo);
-        scene.add(gorra);
-        aux = false;
-    } else {
-        scene.remove(gorra);
-        scene.add(pelo);
-        aux = true;
-    }
-})
-
-
-
-var cambiarMaterial = document.getElementById('cambiarMaterial');
-cambiarMaterial.addEventListener('click', function(){
-    console.log("entro");
-    scene.getObjectByName('cuerpo').material = new THREE.MeshStandardMaterial({
-      map: new THREE.TextureLoader().load('/assets/models/monono/textures/image.png'),
-    });
-    scene.getObjectByName('cuerpo').material = new THREE.MeshStandardMaterial({color: 0xd9b59c, });
-    scene.getObjectByName('cuerpo').material.map.repeat.y = -1; // Invierte la textura verticalmente
-    scene.getObjectByName('cuerpo').material.map.wrapT = THREE.RepeatWrapping; // Habilita el envoltorio de repetición vertical
-    /* ejemplo de poner maps
-    object.getObjectByName('polySurface5').material.metalnessMap = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Metallic.png');
-    object.getObjectByName('polySurface5').material.roughness = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Roughness.png');*/
-}) 
-
-
 //Add the renderer to the DOM
 document.getElementById("container3D").appendChild(renderer.domElement);
-
-
 
 //Render the scene
 function animate() {
@@ -147,13 +88,59 @@ const topLight = new THREE.DirectionalLight(0xffffff, 1); // (color, intensity)
 topLight.position.set(500, 500, 500) //top-left-ish
 topLight.castShadow = true;
 scene.add(topLight); 
-
 const topLight2 = new THREE.DirectionalLight(0xffffff, 1); // (color, intensity)
 topLight2.position.set(-500, 500, -500); // Cambia la posición a la parte trasera
 topLight2.castShadow = true;
-
 scene.add(topLight2);
-
 
 //Start the 3D rendering
 animate();
+
+//Exportador stl
+const exporter = new STLExporter();
+var exportButton = document.getElementById('download.stl');
+exportButton.addEventListener('click', function() {
+    scene.remove(base);
+    var stlData = exporter.parse(scene);
+    var link = document.createElement('a');
+    link.href = 'data:application/octet-stream,' + encodeURIComponent(stlData);
+    link.download = 'mi_monono.stl';
+    link.click();
+    scene.add(base);
+});
+
+var cambiarAccesorio = document.getElementById('cambiarAccesorio');
+let aux = true;
+cambiarAccesorio.addEventListener('click', function() {
+    if (aux) {
+        cargarModelo('/assets/models/monono/gorra.gltf');
+        aux = false;
+    } else {
+        scene.remove(scene.getObjectByName('pCylinder1').parent);
+        aux = true;
+    }
+})
+
+
+
+var cambiarMaterial = document.getElementById('cambiarMaterial');
+cambiarMaterial.addEventListener('click', function(){
+    /*scene.getObjectByName('cuerpo').material = new THREE.MeshStandardMaterial({
+      map: new THREE.TextureLoader().load('/assets/models/monono/textures/image.png'),
+    });*/
+    scene.getObjectByName('cuerpo').material = new THREE.MeshStandardMaterial({ color: 0xd9b59c, });
+    scene.getObjectByName('cara').material = new THREE.MeshStandardMaterial({ color: 0xd9b59c, });
+    scene.getObjectByName('pelo').material = new THREE.MeshStandardMaterial({ color: 0x964B00 , });
+    scene.getObjectByName('zapas').material = new THREE.MeshStandardMaterial({ color: 0x000000, });
+    //scene.getObjectByName('cuerpo').material.map.repeat.y = -1; // Invierte la textura verticalmente
+    //scene.getObjectByName('cuerpo').material.map.wrapT = THREE.RepeatWrapping; // Habilita el envoltorio de repetición vertical
+    /* ejemplo de poner maps
+    object.getObjectByName('polySurface5').material.metalnessMap = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Metallic.png');
+    object.getObjectByName('polySurface5').material.roughness = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Roughness.png');*/
+})
+
+cargarModelo('/assets/models/monono/base.gltf');
+cargarModelo('/assets/models/monono/cabeza.gltf');
+cargarModelo('/assets/models/monono/cuerpo.gltf');
+cargarModelo('/assets/models/monono/pelo.gltf');
+cargarModelo('/assets/models/monono/zapas.gltf');
