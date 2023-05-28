@@ -38,7 +38,7 @@ controls.update();
 
 //CargarHDR
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load('/assets/unity.hdr', function(texture) {
+rgbeLoader.load('/assets/final.hdr', function(texture) {
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.environment = texture;
 }); 
@@ -144,4 +144,4 @@ cargarModelo('/assets/models/monono/base.gltf');
 cargarModelo('/assets/models/monono/cabeza.gltf');
 cargarModelo('/assets/models/monono/cuerpo.gltf');
 cargarModelo('/assets/models/monono/pelo.gltf');
-cargarModelo('/assets/models/monono/zapas.gltf');
+cargarModelo('/assets/models/monono/zapas.gltf'); 
