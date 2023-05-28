@@ -46,27 +46,25 @@ rgbeLoader.load('/assets/unity.hdr', function(texture) {
 // Importacion de modelos
 const gltfLoader = new GLTFLoader();
 
-var object;
-cargarModelo('/assets/models/monono/base.gltf');
-var base = object;
-cargarModelo('/assets/models/monono/cabeza.gltf');
-var cabeza = object;
-cargarModelo('/assets/models/monono/cuerpo.gltf');
-var cuerpo = object;
-cargarModelo('/assets/models/monono/gorra.gltf');
-var gorra = object;
-cargarModelo('/assets/models/monono/pelo.gltf');
-var pelo = object;
-cargarModelo('/assets/models/monono/zapas.gltf');
-var zapas = object;
+cargarModelo('/assets/models/monono/base.gltf', true, base);
+cargarModelo('/assets/models/monono/cabeza.gltf', true, cabeza);
+cargarModelo('/assets/models/monono/cuerpo.gltf', true, cuerpo);
+cargarModelo('/assets/models/monono/gorra.gltf', false, gorra);
+cargarModelo('/assets/models/monono/pelo.gltf', true, pelo);
+cargarModelo('/assets/models/monono/zapas.gltf', true, zapas);
 
-function cargarModelo(url) {
+function cargarModelo(url, add, name) {
   //Load the file
-  gltfLoader.load(url,function (gltf) {
+  gltfLoader.load(url,
+    function (gltf) {
       //If the file is loaded, add it to the scene
-      let model = gltf.scene;
-      scene.add(model);
-      object = model;
+      var model = gltf.scene;
+      model.name = name;
+      if (add) {
+        scene.add(model);
+      }
+      console.log(model);
+      callback = model; // Llama a la devolución de llamada con el modelo cargado
     },
     function (xhr) {
       //While it is loading, log the progress
@@ -78,6 +76,7 @@ function cargarModelo(url) {
     }
   );
 }
+
 
 //Exportador stl
 const exporter = new STLExporter();
