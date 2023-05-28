@@ -100,13 +100,14 @@ animate();
 const exporter = new STLExporter();
 var exportButton = document.getElementById('download.stl');
 exportButton.addEventListener('click', function() {
-    scene.remove(base);
+    let base = scene.getObjectByName('base');
+    scene.remove(base.parent);
     var stlData = exporter.parse(scene);
     var link = document.createElement('a');
     link.href = 'data:application/octet-stream,' + encodeURIComponent(stlData);
     link.download = 'mi_monono.stl';
     link.click();
-    scene.add(base);
+    scene.add(base)
 });
 
 var cambiarAccesorio = document.getElementById('cambiarAccesorio');
