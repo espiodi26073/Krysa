@@ -10,10 +10,18 @@ header {
   /* background-image: url(/assets/Img/fondoNavBar.png); */
 }
 
+header button {
+  margin: 5px;
+}
+
 #container3D canvas {
   width: 100vw !important;
   height: 100vh !important;
   position: absolute;
   top: 0;
   left: 0;
+  background-image: url(/assets/Img/three/fondo.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

@@ -1,71 +1,67 @@
-//Import the THREE.js librarys
+//Import THREE.js
 import * as THREE from "https://cdn.skypack.dev/three@0.129.0/build/three.module.js";
 import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
 import {RGBELoader} from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/RGBELoader.js';
 import {STLExporter} from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/exporters/STLExporter.js';
 
-//Create a Three.JS Scene
+
 const scene = new THREE.Scene();
 
 // Background
-const textureBG = new THREE.TextureLoader().load('/assets/Img/three/fondo.png');
-scene.background = textureBG; 
+//scene.background = new THREE.TextureLoader().load('/assets/Img/three/fondo.png');
 
-// create a new camera with positions and angles
+// Camara
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(
-  -0.35823489125295016,
-  3.1498296464322113,
-  14.725779301728066
+  0,
+  0,
+  13
 );
 
 // Render
-const renderer = new THREE.WebGLRenderer({antialias: true});
+const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x000000, 0);
+/* renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1; */
 document.body.appendChild(renderer.domElement);
 
 // Controles
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enablePan = false;
-//controls.enableZoom = false;
+controls.enableZoom = false;
 controls.enableChangeTarget = false;
 controls.enableTilt = false;
 controls.minPolarAngle = Math.PI / 5;
 controls.maxPolarAngle = Math.PI / 2; 
 controls.update();
 
-//CargarHDR
+/* //CargarHDR
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load('/assets/final.hdr', function(texture) {
+rgbeLoader.load('/assets/roblox.hdr', function(texture) {
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.environment = texture;
-}); 
-
+});  */
 
 // Importacion de modelos
 const gltfLoader = new GLTFLoader();
 function cargarModelo(url) {
-  //Load the file
-  gltfLoader.load(url,
-    function (gltf) {
-      //If the file is loaded, add it to the scene
+  gltfLoader.load(url, function (gltf) {
       let model = gltf.scene;
       scene.add(model);
     },
     function (xhr) {
-      //While it is loading, log the progress
       console.log((xhr.loaded / xhr.total * 100) + '% loaded');
     },
     function (error) {
-      //If there is an error, log it
       console.error(error);
     }
   );
 }
 
-//Add the renderer to the DOM
+// Agregar render a div
 document.getElementById("container3D").appendChild(renderer.domElement);
 
 //Render the scene
@@ -74,26 +70,72 @@ function animate() {
 }
 renderer.setAnimationLoop(animate);
 
-//Add a listener to the window, so we can resize the window and the camera
+// Auto size de la scena
 window.addEventListener("resize", function () {
-  console.log(scene)
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  console.log(scene)
 });
 
 
-//Add lights to the scene, so we can actually see the 3D model
-const topLight = new THREE.DirectionalLight(0xffffff, 1); // (color, intensity)
-topLight.position.set(500, 500, 500) //top-left-ish
-topLight.castShadow = true;
-scene.add(topLight); 
-const topLight2 = new THREE.DirectionalLight(0xffffff, 1); // (color, intensity)
-topLight2.position.set(-500, 500, -500); // Cambia la posición a la parte trasera
-topLight2.castShadow = true;
-scene.add(topLight2);
+// Luces
+var light = new THREE.AmbientLight( 0xffffff );
+var spotLight = new THREE.SpotLight(0xffffff);
+spotLight.position.set(-100, 0, 500);
+spotLight.intensity = 0.1; 
+spotLight.castShadow = true;
+spotLight.shadow.mapSize.width = 1024;
+spotLight.shadow.mapSize.height = 1024;
+spotLight.shadow.camera.near = 500;
+spotLight.shadow.camera.far = 4000;
+spotLight.shadow.camera.fov = 30;
+light.add(spotLight);
+var spotLightReverse = new THREE.SpotLight(0xffffff);
+spotLightReverse.intensity = 0.1; 
+spotLightReverse.position.set(100, 0, -500);
+spotLightReverse.castShadow = true;
+spotLightReverse.shadow.mapSize.width = 1024;
+spotLightReverse.shadow.mapSize.height = 1024;
+spotLightReverse.shadow.camera.near = 500;
+spotLightReverse.shadow.camera.far = 4000;
+spotLightReverse.shadow.camera.fov = 30;
+light.add(spotLightReverse);
+/*
+var spotLightTop = new THREE.SpotLight(0xffffff);
+spotLightTop.intensity = 0.8;
+spotLightTop.position.set(0, 500, 0);
+spotLightTop.castShadow = true;
+spotLightTop.shadow.mapSize.width = 1024;
+spotLightTop.shadow.mapSize.height = 1024;
+spotLightTop.shadow.camera.near = 500;
+spotLightTop.shadow.camera.far = 4000;
+spotLightTop.shadow.camera.fov = 30;
+light.add(spotLightTop);
 
-//Start the 3D rendering
+var spotLightLeft = new THREE.SpotLight(0xffffff);
+spotLightLeft.intensity = 0.8;
+spotLightLeft.position.set(500, 0, 0);
+spotLightLeft.castShadow = true;
+spotLightLeft.shadow.mapSize.width = 1024;
+spotLightLeft.shadow.mapSize.height = 1024;
+spotLightLeft.shadow.camera.near = 500;
+spotLightLeft.shadow.camera.far = 4000;
+spotLightLeft.shadow.camera.fov = 30;
+light.add(spotLightLeft);
+var spotLightRight = new THREE.SpotLight(0xffffff);
+spotLightRight.intensity = 0.8; 
+spotLightRight.position.set(-500, 0, 0);
+spotLightRight.castShadow = true;
+spotLightRight.shadow.mapSize.width = 1024;
+spotLightRight.shadow.mapSize.height = 1024;
+spotLightRight.shadow.camera.near = 500;
+spotLightRight.shadow.camera.far = 4000;
+spotLightRight.shadow.camera.fov = 30;
+light.add(spotLightRight); */
+scene.add(light)
+
+// Iniciar renderizacion 
 animate();
 
 //Exportador stl
@@ -126,22 +168,24 @@ cambiarAccesorio.addEventListener('click', function() {
 
 var cambiarMaterial = document.getElementById('cambiarMaterial');
 cambiarMaterial.addEventListener('click', function(){
-    /*scene.getObjectByName('cuerpo').material = new THREE.MeshStandardMaterial({
-      map: new THREE.TextureLoader().load('/assets/models/monono/textures/image.png'),
-    });*/
-    scene.getObjectByName('cuerpo').material = new THREE.MeshStandardMaterial({ color: 0xd9b59c, });
-    scene.getObjectByName('cara').material = new THREE.MeshStandardMaterial({ color: 0xd9b59c, });
-    scene.getObjectByName('pelo').material = new THREE.MeshStandardMaterial({ color: 0x964B00 , });
-    scene.getObjectByName('zapas').material = new THREE.MeshStandardMaterial({ color: 0x000000, });
-    //scene.getObjectByName('cuerpo').material.map.repeat.y = -1; // Invierte la textura verticalmente
-    //scene.getObjectByName('cuerpo').material.map.wrapT = THREE.RepeatWrapping; // Habilita el envoltorio de repetición vertical
-    /* ejemplo de poner maps
-    object.getObjectByName('polySurface5').material.metalnessMap = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Metallic.png');
-    object.getObjectByName('polySurface5').material.roughness = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Roughness.png');*/
+  scene.getObjectByName('Merged_polySurface2_7').material = new THREE.MeshStandardMaterial({
+    map: new THREE.TextureLoader().load('/assets/models/image.png')
+  })
+
+  /* scene.getObjectByName('polySurface5').material = new THREE.MeshStandardMaterial({
+    map: new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_BaseColor.png', 
+    ), metalness: 1,
+  });
+  scene.getObjectByName('polySurface5').material.metalnessMap = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Metallic.png');
+  scene.getObjectByName('polySurface5').material.roughness = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Roughness.png');
+  scene.getObjectByName('polySurface5').material.map.repeat.y = -1; // Invierte la textura verticalmente
+  scene.getObjectByName('polySurface5').material.map.wrapT = THREE.RepeatWrapping; // Habilita el envoltorio de repetición vertical */
 })
 
-cargarModelo('/assets/models/monono/base.gltf');
+cargarModelo('/assets/cuerpofinal.gltf');
+
+/* cargarModelo('/assets/models/monono/base.gltf');
 cargarModelo('/assets/models/monono/cabeza.gltf');
 cargarModelo('/assets/models/monono/cuerpo.gltf');
 cargarModelo('/assets/models/monono/pelo.gltf');
-cargarModelo('/assets/models/monono/zapas.gltf'); 
+cargarModelo('/assets/models/monono/zapas.gltf'); */
