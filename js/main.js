@@ -101,38 +101,6 @@ spotLightReverse.shadow.camera.near = 500;
 spotLightReverse.shadow.camera.far = 4000;
 spotLightReverse.shadow.camera.fov = 30;
 light.add(spotLightReverse);
-/*
-var spotLightTop = new THREE.SpotLight(0xffffff);
-spotLightTop.intensity = 0.8;
-spotLightTop.position.set(0, 500, 0);
-spotLightTop.castShadow = true;
-spotLightTop.shadow.mapSize.width = 1024;
-spotLightTop.shadow.mapSize.height = 1024;
-spotLightTop.shadow.camera.near = 500;
-spotLightTop.shadow.camera.far = 4000;
-spotLightTop.shadow.camera.fov = 30;
-light.add(spotLightTop);
-
-var spotLightLeft = new THREE.SpotLight(0xffffff);
-spotLightLeft.intensity = 0.8;
-spotLightLeft.position.set(500, 0, 0);
-spotLightLeft.castShadow = true;
-spotLightLeft.shadow.mapSize.width = 1024;
-spotLightLeft.shadow.mapSize.height = 1024;
-spotLightLeft.shadow.camera.near = 500;
-spotLightLeft.shadow.camera.far = 4000;
-spotLightLeft.shadow.camera.fov = 30;
-light.add(spotLightLeft);
-var spotLightRight = new THREE.SpotLight(0xffffff);
-spotLightRight.intensity = 0.8; 
-spotLightRight.position.set(-500, 0, 0);
-spotLightRight.castShadow = true;
-spotLightRight.shadow.mapSize.width = 1024;
-spotLightRight.shadow.mapSize.height = 1024;
-spotLightRight.shadow.camera.near = 500;
-spotLightRight.shadow.camera.far = 4000;
-spotLightRight.shadow.camera.fov = 30;
-light.add(spotLightRight); */
 scene.add(light)
 
 // Iniciar renderizacion 
