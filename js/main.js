@@ -83,7 +83,7 @@ window.addEventListener("resize", function () {
 var light = new THREE.AmbientLight( 0xffffff );
 var spotLight = new THREE.SpotLight(0xffffff);
 spotLight.position.set(-100, 0, 500);
-spotLight.intensity = 0.1; 
+spotLight.intensity = 0.25; 
 spotLight.castShadow = true;
 spotLight.shadow.mapSize.width = 1024;
 spotLight.shadow.mapSize.height = 1024;
@@ -92,7 +92,7 @@ spotLight.shadow.camera.far = 4000;
 spotLight.shadow.camera.fov = 30;
 light.add(spotLight);
 var spotLightReverse = new THREE.SpotLight(0xffffff);
-spotLightReverse.intensity = 0.1; 
+spotLightReverse.intensity = 0.25; 
 spotLightReverse.position.set(100, 0, -500);
 spotLightReverse.castShadow = true;
 spotLightReverse.shadow.mapSize.width = 1024;
