@@ -139,21 +139,11 @@ cambiarMaterial.addEventListener('click', function(){
   scene.getObjectByName('Merged_polySurface2_7').material = new THREE.MeshStandardMaterial({
     map: new THREE.TextureLoader().load('/assets/models/image.png')
   })
-
-  /* scene.getObjectByName('polySurface5').material = new THREE.MeshStandardMaterial({
-    map: new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_BaseColor.png', 
-    ), metalness: 1,
-  });
-  scene.getObjectByName('polySurface5').material.metalnessMap = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Metallic.png');
+  /* scene.getObjectByName('polySurface5').material.metalnessMap = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Metallic.png');
   scene.getObjectByName('polySurface5').material.roughness = new THREE.TextureLoader().load('/assets/models/viejo/textures/testlow_polySurface5_Roughness.png');
   scene.getObjectByName('polySurface5').material.map.repeat.y = -1; // Invierte la textura verticalmente
-  scene.getObjectByName('polySurface5').material.map.wrapT = THREE.RepeatWrapping; // Habilita el envoltorio de repetición vertical */
+  scene.getObjectByName('polySurface5').material.map.wrapT = THREE.RepeatWrapping; // Habilita el envoltorio de repetición vertical */ 
 })
 
-cargarModelo('/assets/cuerpofinal.gltf');
-
-/* cargarModelo('/assets/models/monono/base.gltf');
-cargarModelo('/assets/models/monono/cabeza.gltf');
-cargarModelo('/assets/models/monono/cuerpo.gltf');
-cargarModelo('/assets/models/monono/pelo.gltf');
-cargarModelo('/assets/models/monono/zapas.gltf'); */
+cargarModelo('/assets/models/cabeza.gltf');
+//cargarModelo('/assets/cuerpofinal.gltf');
