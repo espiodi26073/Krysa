@@ -145,5 +145,5 @@ cambiarMaterial.addEventListener('click', function(){
   scene.getObjectByName('polySurface5').material.map.wrapT = THREE.RepeatWrapping; // Habilita el envoltorio de repetición vertical */ 
 })
 
-cargarModelo('/assets/models/cabeza.gltf');
-//cargarModelo('/assets/cuerpofinal.gltf');
+//cargarModelo('/assets/models/cabeza.gltf');
+cargarModelo('/assets/cuerpofinal.gltf');
