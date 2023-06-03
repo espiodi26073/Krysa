@@ -28,6 +28,9 @@ carousel.classList.remove("no-transition");
 arrowBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         carousel.scrollLeft += btn.id == "left" ? -firstCardWidth : firstCardWidth;
+        if (carousel.scrollLeft < 32.66666793823242) {
+            carousel.scrollLeft = 32.66666793823242;
+        }
     });
 });
 
